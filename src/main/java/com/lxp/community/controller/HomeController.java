@@ -26,7 +26,7 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(path = "index", method = RequestMethod.GET)
+    @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page){
         //Spring MVC 的参数由dispatchServlet初始化
         //方法调用前，Spring MVC会自动实例化Model和Page，并将Page注入Model
