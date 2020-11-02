@@ -1,6 +1,7 @@
 package com.lxp.community.config;
 
 import com.lxp.community.controller.interceptor.AlphaInterceptor;
+import com.lxp.community.controller.interceptor.LoginRequiredInterceptor;
 import com.lxp.community.controller.interceptor.LoginTicketInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private LoginTicketInterceptor loginTicketInterceptor;
 
+    @Autowired
+    private LoginRequiredInterceptor loginRequiredInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //// .excludePathPatterns 表示哪些路径不被拦截比方说一些静态资源，
@@ -26,6 +30,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         //所有页面都要做如下处理，除了静态资源
         registry.addInterceptor(loginTicketInterceptor)
+                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
+
+        //所有页面都要做如下处理，除了静态资源
+        registry.addInterceptor(loginRequiredInterceptor)
                 .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
     }
 }

@@ -49,6 +49,7 @@ public class LoginController implements CommunityConstant {
 
     //浏览器提交数据
     @RequestMapping(path = "/register", method = RequestMethod.POST)
+    // User user 也可以分别声明好几个变量，但只要和user的属性对应一致，可以直接声明一个user
     public String register(Model model, User user){
         Map<String, Object> map = userService.register(user);
         if(map == null || map.isEmpty()){
