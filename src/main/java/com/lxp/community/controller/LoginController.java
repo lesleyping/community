@@ -4,7 +4,6 @@ import com.google.code.kaptcha.Producer;
 import com.lxp.community.entity.User;
 import com.lxp.community.service.UserService;
 import com.lxp.community.util.CommunityConstant;
-import com.sun.tools.internal.ws.wsdl.document.Output;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
