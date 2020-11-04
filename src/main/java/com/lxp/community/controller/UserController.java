@@ -2,6 +2,7 @@ package com.lxp.community.controller;
 
 import com.lxp.community.annotation.LoginRequired;
 import com.lxp.community.entity.User;
+import com.lxp.community.service.LikeService;
 import com.lxp.community.service.UserService;
 import com.lxp.community.util.CommunityUtil;
 import com.lxp.community.util.HostHolder;
@@ -44,6 +45,9 @@ public class UserController {
     //要更新当前用户的头像，就要取出当前用户
     @Autowired
     private HostHolder hostHolder;
+
+    @Autowired
+    private LikeService likeService;
 
     @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
@@ -133,6 +137,22 @@ public class UserController {
             return "/site/setting";
         }
 
+    }
+
+    // 个人主页
+    @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
+    public String getProfilePage(@PathVariable("userId") int userId, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在！");
+        }
+        // 用户
+        model.addAttribute("user",user);
+        // 点赞数量
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount", likeCount);
+
+        return "/site/profile";
     }
 
 }
