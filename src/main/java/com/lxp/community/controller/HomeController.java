@@ -4,7 +4,9 @@ import com.lxp.community.entity.DiscussPost;
 import com.lxp.community.entity.Page;
 import com.lxp.community.entity.User;
 import com.lxp.community.service.DiscussPostService;
+import com.lxp.community.service.LikeService;
 import com.lxp.community.service.UserService;
+import com.lxp.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
 
     //访问路径可省略
     @Autowired
@@ -25,6 +27,9 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LikeService likeService;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page){
@@ -43,6 +48,10 @@ public class HomeController {
                 map.put("post", post);
                 User user = userService.findUserById(post.getUserId());
                 map.put("user", user);
+
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount", likeCount);
+
                 discussPosts.add(map);
             }
         }
