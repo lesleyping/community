@@ -1,7 +1,9 @@
 package com.lxp.community.controller;
 
+import com.lxp.community.entity.Event;
 import com.lxp.community.entity.Page;
 import com.lxp.community.entity.User;
+import com.lxp.community.event.EventProducer;
 import com.lxp.community.service.FollowService;
 import com.lxp.community.service.UserService;
 import com.lxp.community.util.CommunityConstant;
@@ -26,6 +28,8 @@ public class FollowController implements CommunityConstant {
     private HostHolder hostHolder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EventProducer eventProducer;
 
     @RequestMapping(path = "/follow", method = RequestMethod.POST)
     @ResponseBody
@@ -34,6 +38,14 @@ public class FollowController implements CommunityConstant {
         // TODO补充拦截器
         followService.follow(user.getId(), entityType, entityId);
 
+        // 触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
         return CommunityUtil.getJSONString(0, "已关注！");
     }
 
