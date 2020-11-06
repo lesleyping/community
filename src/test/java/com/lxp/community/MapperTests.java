@@ -8,7 +8,8 @@ import com.lxp.community.entity.DiscussPost;
 import com.lxp.community.entity.LoginTicket;
 import com.lxp.community.entity.Message;
 import com.lxp.community.entity.User;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;

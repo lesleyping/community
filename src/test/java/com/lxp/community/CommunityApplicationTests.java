@@ -3,7 +3,7 @@ package com.lxp.community;
 import com.lxp.community.config.AlphaConfig;
 import com.lxp.community.dao.AlphaDao;
 import com.lxp.community.service.AlphaService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
