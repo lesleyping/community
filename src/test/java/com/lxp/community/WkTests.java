@@ -13,9 +13,10 @@ public class WkTests {
         String fileName = "2";
         String suffix = ".png";
 
-        String cmd = wkImageCommand + " --quality 75 " + htmlUrl + " " + wkImageStorage + "/" + fileName + suffix;
+        //String cmd = wkImageCommand + " --quality 75 " + htmlUrl + " " + wkImageStorage + "/" + fileName + suffix;
         //String cmd = "rm -rf /Users/lixiping/WorkSpace/nowcoder/data/wk-image";
         //System.out.println(cmd);
+        String cmd = "wkhtmltoimage --quality 75 http://www.nowcoder.com /Users/lixiping/WorkSpace/nowcoder/data/wkimage/1.png";
         try {
             Runtime.getRuntime().exec(cmd);
             Thread.sleep(1000);
