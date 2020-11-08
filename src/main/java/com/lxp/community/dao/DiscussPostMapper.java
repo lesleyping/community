@@ -9,7 +9,8 @@ import java.util.List;
 @Mapper
 public interface DiscussPostMapper {
     //个人主页 用id查发送过的帖子，因此userId可以为空
-    List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit);
+    // ordermode = 0 按照type和时间排序，ordermode = 1 按照热度排
+    List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit, int orderMode);
 
     //@Param注解 用于给参数起别名
     //如果只有一个参数，并且在<if>里使用，则必须起别名
@@ -25,4 +26,6 @@ public interface DiscussPostMapper {
     int updateType(int id, int type);
 
     int updateStatus(int id, int status);
+
+    int updateScore(int id, double score);
 }

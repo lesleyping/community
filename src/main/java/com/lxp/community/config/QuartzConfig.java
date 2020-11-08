@@ -1,6 +1,7 @@
 package com.lxp.community.config;
 
 import com.lxp.community.quartz.AlphaJob;
+import com.lxp.community.quartz.PostScoreRefreshJob;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +40,32 @@ public class QuartzConfig {
         factoryBean.setName("alphaTrigger");
         factoryBean.setGroup("alphaTriggerGroup");
         factoryBean.setRepeatInterval(3000);
+        // 存job的状态
+        factoryBean.setJobDataMap(new JobDataMap());
+        return factoryBean;
+    }
+
+    // 配置刷新帖子分数的任务
+    @Bean
+    public JobDetailFactoryBean postScoreRefreshJobDetail() {
+        JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+        factoryBean.setJobClass(PostScoreRefreshJob.class);
+        factoryBean.setName("postScoreRefreshJob");
+        factoryBean.setGroup("communityJobGroup");
+        factoryBean.setDurability(true);
+        factoryBean.setRequestsRecovery(true);
+        return factoryBean;
+    }
+
+    // 配置Trigger（SimpleTriggerFactoryBean，CronTriggerFactoryBean）
+    @Bean
+    public SimpleTriggerFactoryBean postScoreRefreshTrigger(JobDetail postScoreRefreshJob) {
+        SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
+        factoryBean.setJobDetail(postScoreRefreshJob);
+        factoryBean.setName("postScoreRefreshTrigger");
+        factoryBean.setGroup("communityTriggerGroup");
+        // 5minutes
+        factoryBean.setRepeatInterval(2 * 60 * 1000);
         // 存job的状态
         factoryBean.setJobDataMap(new JobDataMap());
         return factoryBean;
