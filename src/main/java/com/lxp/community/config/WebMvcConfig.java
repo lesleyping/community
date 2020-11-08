@@ -1,9 +1,6 @@
 package com.lxp.community.config;
 
-import com.lxp.community.controller.interceptor.AlphaInterceptor;
-import com.lxp.community.controller.interceptor.LoginRequiredInterceptor;
-import com.lxp.community.controller.interceptor.LoginTicketInterceptor;
-import com.lxp.community.controller.interceptor.MessageInterceptor;
+import com.lxp.community.controller.interceptor.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,6 +19,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private MessageInterceptor messageInterceptor;
+
+    @Autowired
+    private DateInterceptor dateInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -42,6 +42,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         //所有页面都要做如下处理，除了静态资源
         registry.addInterceptor(messageInterceptor)
+                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
+
+        registry.addInterceptor(dateInterceptor)
                 .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
     }
 }
